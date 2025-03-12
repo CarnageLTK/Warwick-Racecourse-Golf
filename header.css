@@ -1,0 +1,79 @@
+@import url(STANDARDS.css);
+
+/* Add a black background color to the top navigation */
+.main-menu,
+.portrait-menu {
+    width: 100vw;
+    height: 100vh;
+    background-image: url(Assets/6th-from-tee-small.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style the links inside the navigation bar */
+.main-menu a,
+.portrait-menu a {
+    color: #f2f2f2;
+    background-color: #00000055;
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+    text-decoration: none;
+    font-size: 17px;
+    transition: background-color 0.3s;
+
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+/* Add a color to the active/current link */
+.main-menu a.active,
+.portrait-menu a.active {
+    background-color: #57b45aaa;
+    color: white;
+}
+
+.portrait-menu {
+    display: none;
+}
+
+/* Portrait menu styling */
+@media (max-width: 575px) {
+    .main-menu {
+        display: none;
+    }
+
+    .portrait-menu {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .portrait-menu a {
+        padding: 10px 20px;
+        margin: 0;
+
+        flex-direction: column;
+    }
+
+    .portrait-menu .hide {
+        display: none;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .main-menu a:hover,
+    .portrait-menu a:hover { 
+        background-color: #ddddddaa;
+        color: black;
+     }
+}
