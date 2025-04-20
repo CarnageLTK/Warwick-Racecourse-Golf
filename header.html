@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warwick Racecourse Golf</title>
-    <link rel="stylesheet" href="header.css">
-</head>
-<body>
-    <nav id="m-menu" class="main-menu">
-        <a id="home" class="active" onclick="pageSelect('content', 'home')">Home</a>
-        <a id="holeCourse" onclick="pageSelect('content', 'holeCourse')">9 Hole Course</a>
-        <a id="drivingRange" onclick="pageSelect('content', 'drivingRange')">Driving Range</a>
-        <a id="membership" onclick="pageSelect('content', 'membership')">Membership</a>
-        <a id="contactUs" onclick="pageSelect('content', 'contactUs')">Contact Us</a>
-    </nav>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Warwick Racecourse Golf</title>
+        <link rel="stylesheet" href="header.css">
+    </head>
+    <body>
+        <nav id="m-menu" class="main-menu">
+            <a id="home" class="active" onclick="pageSelect('content', 'home')">Home</a>
+            <a id="holeCourse" onclick="pageSelect('content', 'holeCourse')">9 Hole Course</a>
+            <a id="drivingRange" onclick="pageSelect('content', 'drivingRange')">Driving Range</a>
+            <a id="membership" onclick="pageSelect('content', 'membership')">Membership</a>
+            <a id="contactUs" onclick="pageSelect('content', 'contactUs')">Contact Us</a>
+        </nav>
 
-    <nav id="p-menu" class="portrait-menu">
-        <a class="menu-button" onclick="toggleMenu()">&#9776;</a>
-        <a id="home" class="active items hide" onclick="pageSelect('content', 'home')">Home</a>
-        <a id="holeCourse" class="items hide" onclick="pageSelect('content', 'holeCourse')">9 Hole Course</a>
-        <a id="drivingRange" class="items hide" onclick="pageSelect('content', 'drivingRange')">Driving Range</a>
-        <a id="membership" class="items hide" onclick="pageSelect('content', 'membership')">Membership</a>
-        <a id="contactUs" class="items hide" onclick="pageSelect('content', 'contactUs')">Contact Us</a>
-    </nav>
-</body>
-<script>
-    var heightToggle = false;
+        <nav id="p-menu" class="portrait-menu">
+            <a class="menu-button" onclick="toggleMenu()">&#9776;</a>
+            <a id="home" class="active items hide" onclick="pageSelect('content', 'home')">Home</a>
+            <a id="holeCourse" class="items hide" onclick="pageSelect('content', 'holeCourse')">9 Hole Course</a>
+            <a id="drivingRange" class="items hide" onclick="pageSelect('content', 'drivingRange')">Driving Range</a>
+            <a id="membership" class="items hide" onclick="pageSelect('content', 'membership')">Membership</a>
+            <a id="contactUs" class="items hide" onclick="pageSelect('content', 'contactUs')">Contact Us</a>
+        </nav>
+    </body>
+    <script>
+        var heightToggle = false;
 
-    function toggleMenu() {
-        document.querySelectorAll('.items').forEach(item => item.classList.toggle('hide'));
-        heightToggle = !heightToggle;
-        var minHeight = heightToggle ? 300 : 50; 
-        sendRequest('toggle', minHeight);
-    }
-
-    function sendRequest(TYPE, DATA) {
-        window.parent.postMessage({ type: TYPE, data: DATA }, '*');
-    }
-
-    function setActive(ID) {
-        document.querySelectorAll('.active').forEach(item => item.classList.remove('active'));
-        document.querySelectorAll('#' + ID).forEach(item => item.classList.add('active'));
-    }
-
-    function pageSelect(TYPE, DATA_ID) {
-        sendRequest(TYPE, DATA_ID);
-        setActive(DATA_ID);
-        if (document.querySelector('.hide') == null) {
-            toggleMenu();
+        function toggleMenu() {
+            document.querySelectorAll('.items').forEach(item => item.classList.toggle('hide'));
+            heightToggle = !heightToggle;
+            var minHeight = heightToggle ? 300 : 50; 
+            sendRequest('toggle', minHeight);
         }
-    }
-</script>
+
+        function sendRequest(TYPE, DATA) {
+            window.parent.postMessage({ type: TYPE, data: DATA }, '*');
+        }
+
+        function setActive(ID) {
+            document.querySelectorAll('.active').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('#' + ID).forEach(item => item.classList.add('active'));
+        }
+
+        function pageSelect(TYPE, DATA_ID) {
+            sendRequest(TYPE, DATA_ID);
+            setActive(DATA_ID);
+            if (document.querySelector('.hide') == null) {
+                toggleMenu();
+            }
+        }
+    </script>
 </html>

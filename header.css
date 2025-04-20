@@ -70,10 +70,8 @@
     }
 }
 
-@media (hover: hover) and (pointer: fine) {
-    .main-menu a:hover,
-    .portrait-menu a:hover { 
-        background-color: #ddddddaa;
-        color: black;
-     }
+.main-menu a:hover:not(.active),
+.portrait-menu a:hover:not(.active) {
+    background-color: #ddddddaa;
+    color: black;
 }
