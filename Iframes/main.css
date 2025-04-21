@@ -5,6 +5,10 @@ header {
     transition: height 0.3s;
 }
 
+main {
+    height: auto;
+}
+
 iframe {
     width: 100%; 
     height: 100%; 

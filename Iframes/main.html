@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="main.css">
+        <title>Warwick Racecourse Golf</title>
+    </head>
+    <body>
+        <header id="header">
+            <iframe id="header-iframe" src="header.html"></iframe>
+        </header>
+        <main id="main">
+            <iframe id="content-iframe" src="ContentPages/home.html"></iframe>
+        </main>
+        <footer>
+            <iframe src="footer.html"></iframe>
+        </footer>
+    </body>
+    <script>
+        const iframe = document.getElementById('content-iframe');
+        const header = document.getElementById('header');
+
+        function adjustMainHeight() {
+            const contentHeight = window.innerHeight - header.offsetHeight;
+            iframe.contentWindow.postMessage({ type: 'frontPageHeight', payload: `${contentHeight}px` }, '*');
+        }
+
+        const actions = {
+            toggle: (data) => {
+                headerHeight = `${data}px`;
+                header.style.height = headerHeight;
+                adjustMainHeight();
+            },
+            content: (page) => {
+                const validPages = ['home', 'holeCourse', 'drivingRange', 'membership', 'contactUs'];
+                if (validPages.includes(page)) {
+                    document.getElementById('content-iframe').src = `ContentPages/${page}.html`;
+                    console.info('Directing page:', page);
+                } else {
+                    console.warn('Invalid page:', page);
+                }
+            }
+        };
+
+        window.addEventListener('message', (event) => {
+            if (event.origin !== window.location.origin) {
+                console.warn('Received message from unknown origin:', event.origin);
+                return;
+            } else if (event.data.type === 'frontPageHeight') {
+                console.log('Height that was sent:', event.data.data);
+                document.getElementById('main').style.height = `${event.data.data}px`;
+            } else if (actions[event.data.type]) {
+                actions[event.data.type](event.data.data);
+            } else if (!(event.data.command)) {
+                console.warn('Main Received Unknown event:', event.data);
+            } 
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth < 575) {
+                header.style.height = '50px';
+                adjustMainHeight();
+            } else {
+                header.style.height = '100px';
+                adjustMainHeight();
+            }
+        });
+
+        iframe.onload = () => {
+            adjustMainHeight();
+        };
+    </script>
+</html>

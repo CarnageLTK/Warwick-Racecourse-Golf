@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="home.css">
+        <title>Warwick Racecourse Golf - Home</title>
+    </head>
+    <body>
+        <div id="frontPage">
+            <h1>Welcome to Warwick Golf Centre</h1> 
+        </div>
+        <div class="content">
+            <p>Racedays please call 01926 494316 for further opening time details.
+                Ahead of your visit please be aware that Warwick Golf Centre uses card or contactless payments only!
+                PLEASE CHECK THE DRIVING RANGE AND GOLF COURSE PAGES FOR DETAILS AND OPENING TIMES!</p>
+        </div>
+    </body>
+    <script>    
+        // The iframe only listens for messages from the parent
+        // In the iframe script:
+        window.addEventListener('message', (event) => {
+            console.log("Received message in iframe:", event.data);
+
+            // Respond only if necessary (otherwise, avoid sending messages back)
+            if (event.data.type === 'frontPageHeight') {
+                console.log('Adjusting height in iframe:', event.data.payload);
+                document.getElementById('frontPage').style.height = event.data.payload;
+                // Optionally, send data back to the parent (if really needed)
+                // parent.postMessage({ type: 'someEvent', payload: 'someData' }, '*');
+            } else {
+                console.warn('Iframe received unknown event:', event.data);
+            }
+        });
+
+        function sendHeightUpdate() {
+            const height = document.body.scrollHeight;
+            window.parent.postMessage({ type: 'frontPageHeight', data: height }, window.origin);
+        }
+    
+        // Call once on load
+        window.addEventListener('load', sendHeightUpdate);
+    
+        // Observe DOM changes to recalculate height
+        const observer = new MutationObserver(sendHeightUpdate);
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            characterData: true
+        });
+    
+        // Optionally: also send height on window resize or fonts/images loading
+        window.addEventListener('resize', sendHeightUpdate);
+    </script>
+</html>
